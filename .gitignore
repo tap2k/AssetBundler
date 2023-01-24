@@ -1,0 +1,17 @@
+.vs/
+.idea/
+.vscode/
+UserSettings/
+Library/
+Builds/
+Temp/
+Logs/
+obj/
+.DS_Store
+.vsconfig
+*.user
+*.stackdump
+*.lastcodeanalysissucceeded
+NormcoreAppSettings.*
+*.sln
+*.csproj
