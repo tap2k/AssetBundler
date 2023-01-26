@@ -1,19 +1,5 @@
 {
   "dependencies": {
-    "com.microsoft.maps.unity": {
-      "version": "0.11.2",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://unity.virtualearth.net/npm/registry"
-    },
-    "com.microsoft.maps.unity.urp": {
-      "version": "https://github.com/microsoft/MapsSDK-Unity.git?path=/UPM/com.microsoft.maps.unity.urp",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "3405952a03c1555affc2bf11071ad634592e84ce"
-    },
     "com.unity.assetbundlebrowser": {
       "version": "https://github.com/Unity-Technologies/AssetBundles-Browser.git",
       "depth": 0,

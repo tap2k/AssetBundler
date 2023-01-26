@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "com.microsoft.maps.unity": "0.11.2",
-    "com.microsoft.maps.unity.urp": "https://github.com/microsoft/MapsSDK-Unity.git?path=/UPM/com.microsoft.maps.unity.urp",
     "com.unity.assetbundlebrowser": "https://github.com/Unity-Technologies/AssetBundles-Browser.git",
     "com.unity.collab-proxy": "1.17.6",
     "com.unity.feature.development": "1.0.1",
