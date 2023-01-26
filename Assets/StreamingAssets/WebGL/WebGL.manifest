@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3003258869
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: redcube
+      Dependencies: {}
