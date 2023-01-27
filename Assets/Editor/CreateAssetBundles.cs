@@ -40,6 +40,12 @@ public class CreateAssetBundles
     {
         string bearerToken = Login();
 
+        if (!bearerToken)
+        {
+            Debug.error("Couldn't login to server");
+            return;
+        }
+
         int i = 0;
         foreach (AssetBundleManifest manifest in _manifests)
         {
@@ -77,7 +83,7 @@ public class CreateAssetBundles
                     new WaitForSeconds(1);
 
                 if (w.result != UnityWebRequest.Result.Success)
-                    Debug.Log(w.error);
+                    Debug.error(w.error);
                 else
                     Debug.Log("Finished uploading " + bundle + " for " + platform);
             }
@@ -100,7 +106,7 @@ public class CreateAssetBundles
 
             if (w.result != UnityWebRequest.Result.Success)
             {
-                Debug.Log(w.error);
+                Debug.error(w.error);
                 return "";
             }
             else
