@@ -13,10 +13,10 @@ public class CreateAssetBundles
     private static string _channelID = "tsp53";
     private static string _baseURL = "https://remaking.represent.org/strapi";
     
-    //private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL", Application.streamingAssetsPath + "/Mac"};
-    //private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL, BuildTarget.StandaloneOSX };
-    private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL"};
-    private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL};
+    private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL", Application.streamingAssetsPath + "/Mac"};
+    private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL, BuildTarget.StandaloneOSX };
+    //private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL"};
+    //private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL};
     private static List<AssetBundleManifest> _manifests = new List<AssetBundleManifest>();
     private static List<string> _manifestDirs = new List<string>();
 
@@ -48,9 +48,20 @@ public class CreateAssetBundles
             return;
         }
 
+        if (_manifests == null || _manifests.Count == 0)
+        {
+            Debug.Log("Please build your assets first!");
+            return;
+        }
+
         int i = 0;
         foreach (AssetBundleManifest manifest in _manifests)
         {
+            if (manifest == null)
+            {
+                Debug.Log("Please build your assets first!");
+                return;
+            }
             string[] bundles = manifest.GetAllAssetBundles();
             foreach (string bundle in bundles)
             {
