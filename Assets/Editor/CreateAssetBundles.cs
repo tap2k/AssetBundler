@@ -13,8 +13,10 @@ public class CreateAssetBundles
     private static string _channelID = "tsp53";
     private static string _baseURL = "https://remaking.represent.org/strapi";
     
-    private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL" };
-    private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL };
+    //private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL", Application.streamingAssetsPath + "/Mac"};
+    //private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL, BuildTarget.StandaloneOSX };
+    private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL"};
+    private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL};
     private static List<AssetBundleManifest> _manifests = new List<AssetBundleManifest>();
     private static List<string> _manifestDirs = new List<string>();
 
