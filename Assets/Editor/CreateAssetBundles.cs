@@ -32,6 +32,7 @@ public class CreateAssetBundles
             _manifestDirs.Add(_assetBundleDirectories[i]);
             Debug.Log("Built Asset Bundles: " + _assetBundleDirectories[i]);
         }
+        Debug.Log("Finished Building All the Bundles!");
     }
 
     [MenuItem("Assets/UploadAssetBundles")]
@@ -48,7 +49,7 @@ public class CreateAssetBundles
                 string path = _manifestDirs[i] + "/" + bundle;
                 string[] split = _manifestDirs[i].Split("/");
                 string platform = split[split.Length - 1];
-                Debug.Log("Uploading " + path);
+                Debug.Log("Uploading " + bundle);
                 WWWForm form = new WWWForm();
                 form.AddField("platform", platform);
                 Debug.Log("Platform " + platform);
@@ -57,9 +58,7 @@ public class CreateAssetBundles
                 string url = _baseURL + "/api/uploadAssetToChannel";
 
                 if (bundle.ToLower().Contains("avatar"))
-                {
                     url = _baseURL + "/api/uploadAvatar";
-                }
                 else
                 {
                     form.AddField("name", bundle);
@@ -75,18 +74,16 @@ public class CreateAssetBundles
 
                 // dont really need to wait
                 while (!w.isDone)
-                { new WaitForSeconds(1); }
+                    new WaitForSeconds(1);
+
                 if (w.result != UnityWebRequest.Result.Success)
-                {
                     Debug.Log(w.error);
-                }
                 else
-                {
-                    Debug.Log("Uploaded Content!");
-                }
+                    Debug.Log("Finished uploading " + bundle + " for " + platform);
             }
             i++;
         }
+        Debug.Log("Uploaded All Content!");
     }
 
     static string Login()
@@ -110,7 +107,6 @@ public class CreateAssetBundles
             {
                 JObject json = JObject.Parse(w.downloadHandler.text);
                 string jwt = (string)json["jwt"];
-                Debug.Log("Bearer Token = " + jwt);
                 return jwt;
             }
         }
