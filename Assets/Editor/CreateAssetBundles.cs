@@ -13,8 +13,10 @@ public class CreateAssetBundles
     private static string _channelID = "tsp53";
     private static string _baseURL = "https://remaking.represent.org/strapi";
     
-    private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL" };
-    private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL };
+    //private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL", Application.streamingAssetsPath + "/Mac"};
+    //private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL, BuildTarget.StandaloneOSX };
+    private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL"};
+    private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL};
     private static List<AssetBundleManifest> _manifests = new List<AssetBundleManifest>();
     private static List<string> _manifestDirs = new List<string>();
 
@@ -30,14 +32,21 @@ public class CreateAssetBundles
             // Or no compression?
             _manifests.Add(BuildPipeline.BuildAssetBundles(_assetBundleDirectories[i], BuildAssetBundleOptions.ChunkBasedCompression, _targetPlatforms[i]));
             _manifestDirs.Add(_assetBundleDirectories[i]);
-            Debug.Log("Built Asset Bundles: " + _assetBundleDirectories[i]);
+            Debug.Log("Built asset bundles: " + _assetBundleDirectories[i]);
         }
+        Debug.Log("Finished building all the bundles!");
     }
 
     [MenuItem("Assets/UploadAssetBundles")]
     static void UploadAssetBundles()
     {
         string bearerToken = Login();
+
+        if (bearerToken == null)
+        {
+            Debug.Log("Couldn't login to server");
+            return;
+        }
 
         int i = 0;
         foreach (AssetBundleManifest manifest in _manifests)
@@ -48,18 +57,15 @@ public class CreateAssetBundles
                 string path = _manifestDirs[i] + "/" + bundle;
                 string[] split = _manifestDirs[i].Split("/");
                 string platform = split[split.Length - 1];
-                Debug.Log("Uploading " + path);
+                Debug.Log("Uploading " + bundle);
                 WWWForm form = new WWWForm();
                 form.AddField("platform", platform);
-                Debug.Log("Platform " + platform);
                 byte[] bytes = File.ReadAllBytes(path);
                 form.AddBinaryData("bundle", bytes, bundle);
                 string url = _baseURL + "/api/uploadAssetToChannel";
 
                 if (bundle.ToLower().Contains("avatar"))
-                {
                     url = _baseURL + "/api/uploadAvatar";
-                }
                 else
                 {
                     form.AddField("name", bundle);
@@ -75,18 +81,16 @@ public class CreateAssetBundles
 
                 // dont really need to wait
                 while (!w.isDone)
-                { new WaitForSeconds(1); }
+                    new WaitForSeconds(1);
+
                 if (w.result != UnityWebRequest.Result.Success)
-                {
                     Debug.Log(w.error);
-                }
                 else
-                {
-                    Debug.Log("Uploaded Content!");
-                }
+                    Debug.Log("Finished uploading " + bundle + " for " + platform);
             }
             i++;
         }
+        Debug.Log("Uploaded all the content!");
     }
 
     static string Login()
@@ -94,6 +98,7 @@ public class CreateAssetBundles
         WWWForm form = new WWWForm();
         form.AddField("identifier", _username);
         form.AddField("password", _password);
+        Debug.Log("Logging in as " + _username);
 
         using (var w = UnityWebRequest.Post(_baseURL + "/api/auth/local", form))
         {
@@ -110,7 +115,7 @@ public class CreateAssetBundles
             {
                 JObject json = JObject.Parse(w.downloadHandler.text);
                 string jwt = (string)json["jwt"];
-                Debug.Log("Bearer Token = " + jwt);
+                Debug.Log("Successfully logged in!");
                 return jwt;
             }
         }
