@@ -40,9 +40,9 @@ public class CreateAssetBundles
     {
         string bearerToken = Login();
 
-        if (!bearerToken)
+        if (bearerToken == null)
         {
-            Debug.error("Couldn't login to server");
+            Debug.Log("Couldn't login to server");
             return;
         }
 
@@ -82,7 +82,7 @@ public class CreateAssetBundles
                     new WaitForSeconds(1);
 
                 if (w.result != UnityWebRequest.Result.Success)
-                    Debug.error(w.error);
+                    Debug.Log(w.error);
                 else
                     Debug.Log("Finished uploading " + bundle + " for " + platform);
             }
@@ -96,7 +96,7 @@ public class CreateAssetBundles
         WWWForm form = new WWWForm();
         form.AddField("identifier", _username);
         form.AddField("password", _password);
-        Debug.Log("Logging in as " + identifier);
+        Debug.Log("Logging in as " + _username);
 
         using (var w = UnityWebRequest.Post(_baseURL + "/api/auth/local", form))
         {
@@ -106,14 +106,14 @@ public class CreateAssetBundles
 
             if (w.result != UnityWebRequest.Result.Success)
             {
-                Debug.error(w.error);
+                Debug.Log(w.error);
                 return "";
             }
             else
             {
                 JObject json = JObject.Parse(w.downloadHandler.text);
                 string jwt = (string)json["jwt"];
-                Debug.log("Successfully logged in!");
+                Debug.Log("Successfully logged in!");
                 return jwt;
             }
         }
