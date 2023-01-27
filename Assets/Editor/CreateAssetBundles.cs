@@ -30,9 +30,9 @@ public class CreateAssetBundles
             // Or no compression?
             _manifests.Add(BuildPipeline.BuildAssetBundles(_assetBundleDirectories[i], BuildAssetBundleOptions.ChunkBasedCompression, _targetPlatforms[i]));
             _manifestDirs.Add(_assetBundleDirectories[i]);
-            Debug.Log("Built Asset Bundles: " + _assetBundleDirectories[i]);
+            Debug.Log("Built asset bundles: " + _assetBundleDirectories[i]);
         }
-        Debug.Log("Finished Building All the Bundles!");
+        Debug.Log("Finished building all the bundles!");
     }
 
     [MenuItem("Assets/UploadAssetBundles")]
@@ -58,7 +58,6 @@ public class CreateAssetBundles
                 Debug.Log("Uploading " + bundle);
                 WWWForm form = new WWWForm();
                 form.AddField("platform", platform);
-                Debug.Log("Platform " + platform);
                 byte[] bytes = File.ReadAllBytes(path);
                 form.AddBinaryData("bundle", bytes, bundle);
                 string url = _baseURL + "/api/uploadAssetToChannel";
@@ -89,7 +88,7 @@ public class CreateAssetBundles
             }
             i++;
         }
-        Debug.Log("Uploaded All Content!");
+        Debug.Log("Uploaded all the content!");
     }
 
     static string Login()
@@ -97,6 +96,7 @@ public class CreateAssetBundles
         WWWForm form = new WWWForm();
         form.AddField("identifier", _username);
         form.AddField("password", _password);
+        Debug.Log("Logging in as " + identifier);
 
         using (var w = UnityWebRequest.Post(_baseURL + "/api/auth/local", form))
         {
@@ -113,6 +113,7 @@ public class CreateAssetBundles
             {
                 JObject json = JObject.Parse(w.downloadHandler.text);
                 string jwt = (string)json["jwt"];
+                Debug.log("Successfully logged in!");
                 return jwt;
             }
         }
