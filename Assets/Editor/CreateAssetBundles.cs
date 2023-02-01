@@ -120,7 +120,7 @@ public class CreateAssetBundles
             if (w.result != UnityWebRequest.Result.Success)
             {
                 Debug.Log(w.error);
-                return "";
+                return null;
             }
             else
             {
