@@ -7,13 +7,13 @@ using Newtonsoft.Json.Linq;
 
 public class CreateAssetBundles 
 {
-    private static string _username = "tsp53";
-    private static string _password = "abcdef1234";
-    private static string _channelID = "tsp53";
+    private static string _username = "your_username";
+    private static string _password = "your_password";
+    private static string _channelID = "your_channel_id";
     private static string _baseURL = "https://remaking.represent.org/strapi";
 
-    private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/WebGL" };
-    private static BuildTarget[] _targetPlatforms = { BuildTarget.WebGL };
+    private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/WebGL", Application.streamingAssetsPath + "/Mac" };
+    private static BuildTarget[] _targetPlatforms = { BuildTarget.WebGL, BuildTarget.StandaloneOSX };
     //private static string[] _assetBundleDirectories = { Application.streamingAssetsPath + "/Android", Application.streamingAssetsPath + "/PC", Application.streamingAssetsPath + "/WebGL", Application.streamingAssetsPath + "/Mac"};
     //private static BuildTarget[] _targetPlatforms = { BuildTarget.Android, BuildTarget.StandaloneWindows, BuildTarget.WebGL, BuildTarget.StandaloneOSX };
     private static List<AssetBundleManifest> _manifests = new List<AssetBundleManifest>();
